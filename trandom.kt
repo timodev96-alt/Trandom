@@ -9,6 +9,9 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.os.Handler
 import android.os.Looper
+import android.os.Vibrator
+import android.os.VibrationEffect
+import android.os.Build
 
 class FingerRandomizerView : View {
 
@@ -29,10 +32,42 @@ class FingerRandomizerView : View {
         paint = Paint(Paint.ANTI_ALIAS_FLAG)
     }
 
+    private var pulseRadius = 110f
+    private var pulseGrowing = true
+
+    private var pulseRunnable = object : Runnable {
+        override fun run(){
+            if (fingers.isNotEmpty() && winnerId == null) {
+                if (pulseGrowing){
+                    pulseRadius += 1.5f
+                    if (pulseRadius >= 130f) pulseGrowing = false
+                } else {
+                    pulseRadius -= 1.5f
+                    if (pulseRadius <= 110f) pulseGrowing =true
+                }
+                invalidate()
+                localHandler.postDelayed(this,16)
+            }
+        }
+    }
+
     private val selectWinner = Runnable {
         if (fingers.isNotEmpty()) {
             winnerId = fingers.keys.toList().random()
+            triggerVibration()
             invalidate()
+        }
+    }
+
+    private fun triggerVibration() {
+        val vibrator = context.getSystemService(Vibrator::class.java) as? Vibrator
+        if (vibrator != null && vibrator.hasVibrator()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(150,VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(150)
+            }
         }
     }
 
@@ -48,10 +83,16 @@ class FingerRandomizerView : View {
         val id = event.getPointerId(event.actionIndex)
 
         when (action) {
+
             MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
                 fingers[id] = Pair(event.getX(event.actionIndex), event.getY(event.actionIndex))
+                if (fingers.size ==1 ) {
+                    localHandler.post(pulseRunnable)
+                }
                 resetTimer()
             }
+
+
             MotionEvent.ACTION_MOVE -> {
                 for (i in 0 until event.pointerCount) {
                     val pId = event.getPointerId(i)
@@ -95,18 +136,28 @@ class FingerRandomizerView : View {
 
         fingers.forEach { (id, pos) ->
             val (x, y) = pos
-            paint.color = Color.HSVToColor(floatArrayOf((id * 75 % 360).toFloat(), 0.8f, 0.9f))
-            paint.style = Paint.Style.FILL
+            val hue = (id * 75 % 360).toFloat()
+            val fingerColor = Color.HSVToColor(floatArrayOf(hue, 0.8f , 0.9f))
 
             if (winnerId != null) {
                 if (id == winnerId) {
-                    canvas.drawCircle(x, y, 180f, paint)
+                    paint.style = Paint.Style.STROKE
+                    paint.strokeWidth = 15f
+                    paint.color = fingerColor
                 } else {
                     paint.color = Color.parseColor("#22FFFFFF")
                     canvas.drawCircle(x, y, 80f, paint)
                 }
             } else {
-                canvas.drawCircle(x, y, 110f, paint)
+                paint.style = Paint.Style.STROKE
+                paint.strokeWidth = 6f
+                paint.color = fingerColor
+                paint.alpha = 100
+                canvas.drawCircle(x , y , pulseRadius +30f , paint)
+
+                paint.style = Paint.Style.FILL
+                paint.alpha = 255
+                canvas.drawCircle(x,y , pulseRadius , paint)
             }
         }
     }
