@@ -1,0 +1,9 @@
+classes/
+*.class
+classes.dex
+*.apk
+*.keystore
+*.jks
+Thumbs.db
+Desktop.ini
+*.idsig
