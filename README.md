@@ -20,7 +20,7 @@ kotlin.lib= "\Kotlin\kotlinc\lib"
 ### 3. Simpley run `run.bat`
 #### Make sure you have your phone connected & USB DEBUGGING is Enabled... also Set your phone to "Transfer media" mode
 
-### Or Just Download the apk here!
+### Or Just Download the apk [here](https://github.com/timodev96-alt/Trandom/releases/download/Main/Trandom.apk)!
 
 # AI?
 ### I used AI to edit the code to make it look more polished, also in debugging.
