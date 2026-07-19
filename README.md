@@ -1,6 +1,16 @@
 # Trandom
 ### When you play card or board games with friends, you always have to pick who goes first. **Trandom** app does it for you! 
 
+<div align="center">
+  <table border="0">
+    <tr>
+      <td><img src="https://github.com/user-attachments/assets/1726c044-f202-4ac3-bf6c-295d6b73928e" width="200" /></td>
+      <td><img src="https://github.com/user-attachments/assets/256b2ec9-daa5-4e8d-960f-abed07d32e3f" width="200" /></td>
+    </tr>
+  </table>
+</div>
+
+
 # Main Idea
 ### There is 2 Modes, The Finger Picker mode & Spin Wheel mode 
 
