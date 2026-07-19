@@ -1,6 +1,9 @@
 # Trandom
 ### When you play card or board games with friends, you always have to pick who goes first. **Trandom** app does it for you! 
 
+# Main Idea
+## There is 2 Modes, The Finger Picker mode & Spin Wheel mode 
+
 # Want your own version?
 ### 1. First Download the Dependencies
 1. Kotlin Standard Library
@@ -14,3 +17,7 @@ sdk.dir= "\AndroidSDK"
 jdk.bin= "\Java JDK 21\bin"
 kotlin.lib= "\Kotlin\kotlinc\lib"
 ```
+### 3. Simpley run `run.bat`
+#### Make sure you have your phone connected & USB DEBUGGING is Enabled... also Set your phone to "Transfer media" mode
+
+## Or Just Download the apk here!
