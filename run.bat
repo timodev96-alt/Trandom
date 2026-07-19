@@ -15,7 +15,7 @@ if not exist debug.keystore (
 call B:\Hsoub\Kotlin\AndroidSDK\build-tools\33.0.2\aapt.exe package -f -m -J . -M AndroidManifest.xml -S res -I B:\Hsoub\Kotlin\AndroidSDK\platforms\android-33\android.jar
 if %errorlevel% neq 0 (echo Resource Generation Failed! && exit /b)
 
-call kotlinc MainActivity.kt trandom.kt -classpath B:\Hsoub\Kotlin\AndroidSDK\platforms\android-33\android.jar -d classes/
+call kotlinc MainActivity.kt trandom.kt SpinWheelView.kt -classpath B:\Hsoub\Kotlin\AndroidSDK\platforms\android-33\android.jar -d classes/
 if %errorlevel% neq 0 (echo Kotlin Compilation Failed! && exit /b)
 
 call d8 --lib B:\Hsoub\Kotlin\AndroidSDK\platforms\android-33\android.jar --output . classes\com\example\trandom\*.class B:\Hsoub\Kotlin\kotlinc\lib\kotlin-stdlib.jar
